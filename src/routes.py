@@ -2,7 +2,7 @@ import datetime
 
 from src import app, db
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user
+from flask_login import login_user, current_user, logout_user
 from src.forms import RegistrationForm, LoginForm
 from src.models import User, User_Cred
 
@@ -10,7 +10,6 @@ from src.models import User, User_Cred
 @app.route('/')
 def index():
     return render_template('index.html', title='Home')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -31,12 +30,15 @@ def login():
 
 @app.route('/logout')
 def logout():
-    flash("Logout successfull!", "warning")
+    logout_user()
+    flash("Logout successfull!", "info")
     return redirect(url_for('index'))
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
     form = RegistrationForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -65,4 +67,7 @@ def register():
 
 @app.route('/add_item')
 def add_item():
+    if not current_user.is_authenticated:
+        flash("You must login to continue!", "warning")
+        return redirect(url_for('login'))
     return render_template('add_item.html', title='Add New Product')
