@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-3 p-3 shadow bg-light rounded" style="width: 480px;">
+    <div class="display-6 text-center">Registration</div>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <!-- Username -->
+        <div class="mb-3 mt-3">
+            {{ form.username.label(class='form-label') }}
+            {{ form.username(class='form-control', placeholder='Enter Username') }}
+            {% if form.username.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+            {{ form.password.label(class='form-label') }}
+            {{ form.password(class='form-control', placeholder='Enter Password') }}
+            {% if form.password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Fullname -->
+        <div class="mb-3">
+            {{ form.fullname.label(class='form-label') }}
+            {{ form.fullname(class='form-control', placeholder='Enter Fullname') }}
+            {% if form.fullname.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.fullname.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Gender -->
+        <div class="mb-3">
+            {{ form.gender.label(class='form-label') }}
+            {{ form.gender(class='form-select') }}
+            {% if form.gender.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.gender.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-3">
+            {{ form.phone.label(class='form-label') }}
+            {{ form.phone(class='form-control', placeholder='Enter Phone') }}
+            {% if form.phone.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.phone.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Address -->
+        <div class="mb-3">
+            {{ form.address.label(class='form-label') }}
+            {{ form.address(class='form-control', placeholder='Enter Address') }}
+        </div>
+        
+        <div class="d-grid mb-3">
+            {{ form.submit(class='btn btn-info fs-5 btn-block') }}
+        </div>
+    </form>
+    <div class="mb-3">
+        <p class="fs-4">Already have an account?</p>
+        <a href="{{ url_for('login') }}"><button class="btn btn-primary">Login</button></a>
+    </div>
+</div>
+{% endblock content %}
