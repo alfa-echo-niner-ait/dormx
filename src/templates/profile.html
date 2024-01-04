@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <!-- Start of left column -->
+        <div class="col md-8">
+            <div class="card">
+                <div class="card-header"><h4 class="card-title">Update Profile</h4></div>
+                <!-- Form start -->
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col md-3">
+                                <img src="{{ profile_img }}" alt="{{ current_user.username }}"
+                                    class="img-thumbnail" style="max-width: 150px;">
+                            </div>
+                            <div class="col md-3">
+                                    <h4 class="me-auto">{{ current_user.username }}</h4>
+                                    <p class="card-text">Joined on {{ user.reg_date }} at {{ user.reg_time}}</p>
+                                    <!-- Profile Picture -->
+                                    <div class="row">
+                                        <div class="col md-6">
+                                            <h6>{{ form.profile_pic.label() }} (jpg, jpeg, png only)</h6>
+                                        </div>
+                                        <div class="col md-6">
+                                            {{ form.profile_pic(class='form-control-file') }}
+                                            {% if form.profile_pic.errors %}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.profile_pic.errors %}
+                                                {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col md-6"></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        
+                            <!-- Fullname -->
+                            <div class="mb-3">
+                                {{ form.fullname.label(class='form-label') }}
+                                {{ form.fullname(class='form-control', placeholder='Enter Fullname') }}
+                                {% if form.fullname.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.fullname.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        
+                            <!-- Gender -->
+                            <div class="mb-3">
+                                {{ form.gender.label(class='form-label') }}
+                                {{ form.gender(class='form-select') }}
+                                {% if form.gender.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.gender.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        
+                            <!-- Phone -->
+                            <div class="mb-3">
+                                {{ form.phone.label(class='form-label') }}
+                                {{ form.phone(class='form-control', placeholder='Enter Phone') }}
+                                {% if form.phone.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.phone.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        
+                            <!-- Address -->
+                            <div class="mb-3">
+                                {{ form.address.label(class='form-label') }}
+                                {{ form.address(class='form-control', placeholder='Enter Address') }}
+                            </div>
+
+                            <!-- Current Password -->
+                            <div class="mb-3">
+                                {{ form.current_password.label(class='form-label') }}
+                                {{ form.current_password(class='form-control', placeholder='Type Current Password') }}
+                                {% if form.current_password.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.current_password.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <!-- New Password -->
+                            <div class="mb-3">
+                                {{ form.new_password.label(class='form-label') }}
+                                {{ form.new_password(class='form-control', placeholder='Type New Password') }}
+                                {% if form.new_password.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.new_password.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        
+                            <div class="d-grid mb-3">
+                                {{ form.submit(class='btn btn-info fs-5 btn-block') }}
+                            </div>
+                        </div>         
+                    </div>
+                </form>
+                <!-- Form end -->
+            </div>            
+        </div>
+
+        <!-- Start of right column -->
+        <div class="col-md-4 mb-3">
+            <div class="border rounded">
+                <div class="bg-light p-3 fw-bold">Tools</div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="{{ url_for('index') }}" class="text-decoration-none">Home</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="" class="text-decoration-none">My Products</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('logout') }}" class="text-decoration-none">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

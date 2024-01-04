@@ -8,28 +8,34 @@
         <!-- Username -->
         <div class="mb-3 mt-3">
             {{ form.username.label(class='form-label') }}
-            {{ form.username(class='form-control', placeholder='Enter Username') }}
             {% if form.username.errors %}
-                <div class="invalid-feedback">
-                    {% for error in form.username.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
+            {{ form.username(class="form-control is-invalid", placeholder='Enter Username') }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.username(class="form-control", placeholder='Enter Username') }}
             {% endif %}
         </div>
 
         <!-- Password -->
         <div class="mb-3 mt-3">
             {{ form.password.label(class='form-label') }}
-            {{ form.password(class='form-control', placeholder='Enter Password') }}
             {% if form.password.errors %}
+            {{ form.password(class="form-control is-invalid", placeholder='Enter Password') }}
             <div class="invalid-feedback">
                 {% for error in form.password.errors %}
-                {{ error }}
+                <span>{{ error }}</span>
                 {% endfor %}
             </div>
+            {% else %}
+            {{ form.password(class="form-control", placeholder='Enter Password') }}
             {% endif %}
         </div>
+
+        <!-- Login Checkbox -->
         <div class="mb-3 form-check">
             {{ form.remember.label(class='form-check-label') }}
             {{ form.remember(class='form-check-input', type='checkbox') }}

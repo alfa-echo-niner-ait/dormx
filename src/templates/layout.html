@@ -49,9 +49,7 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
-            <img src="https://api.dicebear.com/6.x/bottts/png?seed=uname" alt="uname" style="width: 40px;"
-                class="rounded-pill" />
-            Hello, User!
+            Welcome, {{ current_user.username }}!
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -61,7 +59,7 @@
                 <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Edit Profile</a>
+                <a class="nav-link" href="{{ url_for('profile') }}">Edit Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Manage Products</a>
@@ -79,10 +77,10 @@
 <!-- Offcanvas end -->
 
 <!-- Notice section start -->
-<div class="container mt-2">
+<div class="container-fluid mt-2">
     <div class="row">
-        <div class="col md-3"></div>
-        <div class="col md-6">
+        <div class="col md-2"></div>
+        <div class="col md-8">
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             {% for category, message in messages %}
@@ -94,7 +92,7 @@
             {% endif %}
             {% endwith %}
         </div>
-        <div class="col md-3"></div>
+        <div class="col md-2"></div>
     </div>
 </div>
 <!-- Notice section end -->
