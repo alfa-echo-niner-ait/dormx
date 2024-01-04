@@ -2,9 +2,23 @@
 
 {% block content %}
 <div class="container mt-3">
-    <div class="text-center display-4">
-        Hello from Flask!
-    </div>
+    <div class="row">
+        {% for item in products %}
+        <div class="col">
+            <div class="card" style="width: 250px;">
+                <img src="{{url_for('static', filename='item_pics/' ~ item.product_pic) }}"
+                alt="Product" class="card-img-top p-1">
+                <div class="card-body">
+                    <h4 class="card-title">{{ item.product_name }}</h4>
+                    <p class="card-text">
+                        <span class="badge bg-success">{{ item.product_type }}</span>
+                        <br>
+                        {{ item.price_range }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
 </div>
 {% endblock content %}
     

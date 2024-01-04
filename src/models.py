@@ -65,7 +65,7 @@ class Product(db.Model):
     product_type = db.Column(db.String(4), nullable=False)
     product_desc = db.Column(db.TEXT, nullable=True)
     product_pic = db.Column(db.String(255), nullable=True)
-    price_range = db.Column(db.String(255), nullable=True)
+    price_range = db.Column(db.String(255), nullable=False)
 
     def __init__(self, product_user_id, product_name, product_type,
                  product_desc, product_pic, price_range):

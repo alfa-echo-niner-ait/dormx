@@ -12,7 +12,8 @@ from src.models import User, User_Cred, Product, Product_Status
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='Home')
+    products = Product.query.order_by(Product.product_id.desc())
+    return render_template('index.html', title='Home', products=products)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -25,7 +26,7 @@ def profile():
     
     if form.validate_on_submit():
         if form.profile_pic.data:
-            picture_file = save_picture(form.profile_pic.data)
+            picture_file = save_profile_picture(form.profile_pic.data)
             user.profile_pic = picture_file
         user.fullname = form.fullname.data
         db.session.commit()
@@ -41,7 +42,7 @@ def profile():
     return render_template('profile.html', title='Profile', form=form, user=user, profile_img=profile_img)
 
 
-def save_picture(form_picture):
+def save_profile_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
@@ -119,12 +120,16 @@ def register():
 def add_item():
     form = AddProductForm()
     if form.validate_on_submit():
+        product_pic = 'product_default.png'
+        if form.product_pic.data:
+            picture_file = save_product_picture(form.product_pic.data)
+            product_pic = picture_file
+            
         user_id = current_user.user_id
         name = form.name.data
         type = form.type.data
         description = form.description.data
         price_range = form.price_range.data
-        product_pic = 'product_default.png'
         reg_date = datetime.datetime.now().strftime("%Y/%m/%d")
         reg_time = datetime.datetime.now().strftime("%H:%M:%S")
 
@@ -141,3 +146,20 @@ def add_item():
         return redirect(url_for('add_item'))
     
     return render_template('add_item.html', title='Add New Product', form=form)
+
+
+def save_product_picture(form_picture):
+    random_hex = secrets.token_hex(10)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(
+        app.root_path, 'static/item_pics', picture_fn)
+
+    output_size = (1000, 1000)
+    i = Image.open(form_picture)
+    i = ImageOps.exif_transpose(i)
+    i.thumbnail(output_size, Image.Resampling.LANCZOS)
+    i.save(picture_path)
+
+    return picture_fn
+

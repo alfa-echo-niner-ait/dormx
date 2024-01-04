@@ -52,6 +52,20 @@
                                 {% endif %}
                             </div>
 
+                            <!-- Picture -->
+                            <div class="mb-3">
+                                {{ form.product_pic.label(class='form-label') }}
+                                <br>
+                                {{ form.product_pic(class='form-control-file') }}
+                                {% if form.product_pic.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.product_pic.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+
                             <!-- Description -->
                             <div class="mb-3">
                                 {{ form.description.label(class='form-label') }}

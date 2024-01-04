@@ -53,7 +53,7 @@ class AddProductForm(FlaskForm):
     type = SelectField('Product Type',
                          validators=[DataRequired()], choices=[('Buy', 'I want to buy this product'), ('Sell', 'I want to sell this product')])
     description = TextAreaField('Product Description')
-    price_range = StringField('Price Range')
+    price_range = StringField('Price Range', validators=[DataRequired(), Length(min=1, max=255)])
     product_pic = FileField('Product Picture', validators=[
                         FileAllowed(['jpg', 'jpeg', 'png'])])
 
