@@ -1,29 +1,92 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="container p-3 shadow bg-light rounded" style="width: 480px;">
-    <div class="display-5 text-center">Add New Item</div>
-    <form action="">
-        <div class="mb-3 mt-3">
-            <label for="username" class="form-label">Item Name:</label>
-            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Username">
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <!-- Start of left column -->
+        <div class="col md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Add New Product</h4>
+                </div>
+                <!-- Form start -->
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="card-body">
+                            <!-- Product Name -->
+                            <div class="mb-3">
+                                {{ form.name.label(class='form-label') }}
+                                {{ form.name(class='form-control', placeholder='Enter Product Name') }}
+                                {% if form.name.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.name.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Product Type -->
+                            <div class="mb-3">
+                                {{ form.type.label(class='form-label') }}
+                                {{ form.type(class='form-select') }}
+                                {% if form.type.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.type.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="mb-3">
+                                {{ form.price_range.label(class='form-label') }}
+                                {{ form.price_range(class='form-control', placeholder='Enter Price Range(Eg,. 50-70 RMB)') }}
+                                {% if form.price_range.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.price_range.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Description -->
+                            <div class="mb-3">
+                                {{ form.description.label(class='form-label') }}
+                                {{ form.description(class='form-control', style="height: 90px;", placeholder='Enter Description for Your Product') }}
+                            </div>
+
+                            <div class="d-grid mb-3">
+                                {{ form.submit(class='btn btn-info fs-5 btn-block') }}
+                            </div>
+                    </div>
+                </form>
+                <!-- Form end -->
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">:</label>
-            <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password">
+
+        <!-- Start of right column -->
+        <div class="col-md-4 mb-3">
+            <div class="border rounded">
+                <div class="bg-light p-3 fw-bold">Tools</div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="{{ url_for('index') }}" class="text-decoration-none">Home</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('profile') }}" class="text-decoration-none">Edit Profile</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="" class="text-decoration-none">My Products</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('logout') }}" class="text-decoration-none">Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="mb-3 form-check">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="remember"> Remember me
-            </label>
-        </div>
-        <div class="d-grid mb-3">
-            <button type="submit" class="btn btn-info fs-5 btn-block">Login</button>
-        </div>
-    </form>
-    <div class="mb-3">
-        <p class="fs-4">New here?</p>
-        <a href="{{ url_for('register') }}"><button class="btn btn-primary">Register</button></a>
     </div>
 </div>
 {% endblock content %}

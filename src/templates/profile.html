@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col md-3">
                                 <img src="{{ profile_img }}" alt="{{ current_user.username }}"
-                                    class="img-thumbnail" style="max-width: 150px;">
+                                    class="img-thumbnail" style="max-width: 200px;">
                             </div>
                             <div class="col md-3">
                                     <h4 class="me-auto">{{ current_user.username }}</h4>
@@ -132,6 +132,9 @@
                     </li>
                     <li class="list-group-item">
                         <a href="" class="text-decoration-none">My Products</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('add_item') }}" class="text-decoration-none">Add New Product</a>
                     </li>
                     <li class="list-group-item">
                         <a href="{{ url_for('logout') }}" class="text-decoration-none">Logout</a>

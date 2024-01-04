@@ -1,13 +1,13 @@
 import datetime
 import os
 import secrets
-from PIL import Image
+from PIL import Image, ImageOps
 
 from src import app, db
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, current_user, logout_user, login_required
-from src.forms import RegistrationForm, LoginForm, UpdateProfileForm
-from src.models import User, User_Cred
+from src.forms import RegistrationForm, LoginForm, UpdateProfileForm, AddProductForm
+from src.models import User, User_Cred, Product, Product_Status
 
 
 @app.route('/')
@@ -48,9 +48,10 @@ def save_picture(form_picture):
     picture_path = os.path.join(
         app.root_path, 'static/profile_pics', picture_fn)
 
-    output_size = (150, 150)
+    output_size = (200, 200)
     i = Image.open(form_picture)
-    i.thumbnail(output_size)
+    i = ImageOps.exif_transpose(i)
+    i.thumbnail(output_size, Image.Resampling.LANCZOS)
     i.save(picture_path)
 
     return picture_fn
@@ -113,10 +114,30 @@ def register():
     return render_template('profile.html', title='Register New Account', form=form)
 
 
-@app.route('/add_item')
+@app.route('/add_item', methods=['GET', 'POST'])
 @login_required
 def add_item():
-    if not current_user.is_authenticated:
-        flash("You must login to continue!", "warning")
-        return redirect(url_for('login'))
-    return render_template('add_item.html', title='Add New Product')
+    form = AddProductForm()
+    if form.validate_on_submit():
+        user_id = current_user.user_id
+        name = form.name.data
+        type = form.type.data
+        description = form.description.data
+        price_range = form.price_range.data
+        product_pic = 'product_default.png'
+        reg_date = datetime.datetime.now().strftime("%Y/%m/%d")
+        reg_time = datetime.datetime.now().strftime("%H:%M:%S")
+
+        new_prod = Product(user_id, name, type, description, product_pic, price_range)
+        db.session.add(new_prod)
+        db.session.commit()
+
+        product = Product.query.filter_by(product_user_id=user_id).order_by(Product.product_id.desc()).first()
+        new_prod_status = Product_Status(product.product_id, 'Pending', reg_date, reg_time, reg_date, reg_time)
+        db.session.add(new_prod_status)
+        db.session.commit()
+
+        flash(f'New product added successfully!', category='success')
+        return redirect(url_for('add_item'))
+    
+    return render_template('add_item.html', title='Add New Product', form=form)
