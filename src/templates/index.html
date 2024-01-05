@@ -4,14 +4,22 @@
 <div class="container mt-3">
     <div class="row">
         {% for item in products %}
-        <div class="col">
-            <div class="card" style="width: 250px;">
+        <div class="col md-3 mb-2">
+            <div class="card rounded" style="width: 250px;">
                 <img src="{{url_for('static', filename='item_pics/' ~ item.product_pic) }}"
-                alt="Product" class="card-img-top p-1">
+                alt="Product" class="card-img-top p-1" style="max-height: 160px;">
                 <div class="card-body">
-                    <h4 class="card-title">{{ item.product_name }}</h4>
+                    <a href="{{ url_for('item', item_id=item.product_id) }}"
+                    class="card-title fs-5 text-decoration-none">
+                        {{ item.product_name[:23] }}
+                    </a>
                     <p class="card-text">
-                        <span class="badge bg-success">{{ item.product_type }}</span>
+                        {% if item.product_type == 'Buy' %}
+                        <span class="badge bg-info">{{ item.product_type }}</span>
+                        {% else %}
+                        <span class="badge bg-warning">{{ item.product_type }}</span>
+                        {% endif %}
+                            
                         <br>
                         {{ item.price_range }}
                     </p>
@@ -19,6 +27,7 @@
             </div>
         </div>
         {% endfor %}
+    </div> 
 </div>
 {% endblock content %}
     

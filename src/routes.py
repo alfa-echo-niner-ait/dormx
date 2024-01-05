@@ -6,7 +6,7 @@ from PIL import Image, ImageOps
 from src import app, db
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, current_user, logout_user, login_required
-from src.forms import RegistrationForm, LoginForm, UpdateProfileForm, AddProductForm
+from src.forms import RegistrationForm, LoginForm, UpdateProfileForm, AddProductForm, BetForm
 from src.models import User, User_Cred, Product, Product_Status
 
 
@@ -112,7 +112,7 @@ def register():
         flash(f'Account created successfully!', category='success')
         flash(f'Update profile if you need any change!', category='info')
         return redirect(url_for('profile'))
-    return render_template('profile.html', title='Register New Account', form=form)
+    return render_template('register.html', title='Register New Account', form=form)
 
 
 @app.route('/add_item', methods=['GET', 'POST'])
@@ -155,7 +155,7 @@ def save_product_picture(form_picture):
     picture_path = os.path.join(
         app.root_path, 'static/item_pics', picture_fn)
 
-    output_size = (1000, 1000)
+    output_size = (500, 500)
     i = Image.open(form_picture)
     i = ImageOps.exif_transpose(i)
     i.thumbnail(output_size, Image.Resampling.LANCZOS)
@@ -163,3 +163,29 @@ def save_product_picture(form_picture):
 
     return picture_fn
 
+
+@app.route('/item/<int:item_id>', methods=['GET', 'POST'])
+def item(item_id):
+    form = BetForm()
+    product = Product.query.filter_by(product_id=item_id).first()
+    poster = User_Cred.query.filter_by(user_id=product.product_user_id).first()
+    poster_id = poster.user_id
+    poster_name = poster.username
+    product_st = Product_Status.query.filter_by(product_id=item_id).first()
+    return render_template('item.html', title=product.product_name,
+                           ps_id= poster_id, ps_uname=poster_name,
+                           form=form, item=product, item_st=product_st)
+
+
+@app.route('/item/<int:item_id>/update', methods=['GET', 'POST'])
+@login_required
+def item_update(item_id):
+    product = Product.query.filter_by(product_id=item_id).first()
+    product_st = Product_Status.query.filter_by(product_id=item_id).first()
+    return render_template('item_update.html', title=product.product_name, product=product, ps=product_st)
+
+@app.route('/user/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def user(user_id):
+    user = User.query.filter_by(user_id=user_id).first()
+    return render_template('user.html', title=user.fullname, user=user)

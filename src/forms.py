@@ -59,4 +59,10 @@ class AddProductForm(FlaskForm):
 
     submit = SubmitField('Add Product')
     
+
+class BetForm(FlaskForm):
+    price = StringField('Bet Price',
+                       validators=[DataRequired(), Length(min=1, max=255)])
+    submit = SubmitField('Bet')
+    
     

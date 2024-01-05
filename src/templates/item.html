@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-3">
+    <div class="row border rounded">
+        <div class="col md-6 border">
+            <img src="{{url_for('static', filename='item_pics/' ~ item.product_pic) }}"
+            alt="{{ item.product_name }}" class="img-fluid mx-auto d-block"
+            style="max-height: 500px; max-width: 500px;">
+        </div>
+        <div class="col md-6">
+            <h4 class="display-6">
+                {{ item.product_name }}
+            </h4>
+            <p>
+                {% if item.product_type == 'Buy' %}
+                <span class="badge bg-info fs-6 me-2">{{ item.product_type }}</span>
+                {% else %}
+                <span class="badge bg-warning fs-6 me-2">{{ item.product_type }}</span>
+                {% endif %}
+
+                {% if item_st.condition == 'Pending' %}
+                <span class="badge bg-danger fs-6">
+                    <span class="spinner-border spinner-border-sm"></span>
+                    Pending
+                </span>
+                {% else %}
+                <span class="badge bg-success fs-6">
+                    Completed
+                </span>
+                {% endif %}
+            </p>
+            <p>
+                <strong>Posted By: </strong> <a href="{{ url_for('user', user_id=ps_id) }}"
+                class="text-decoration-none">{{ ps_uname }}</a>
+                <br>
+                <strong>Last Update: </strong> {{ item_st.last_update_date }} at {{ item_st.last_update_time }}
+                <br>
+                <strong>Price Range: </strong> {{ item.price_range }}
+            </p>
+            <!-- Post Bet -->
+            <p>
+                
+                {% if current_user.user_id == item.product_user_id %}
+                <a href="{{ url_for('item_update', item_id=item.product_id) }}" class="btn btn-info">Update This Product</a>
+                {% elif current_user.is_authenticated %}
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <div class="row">
+                        <div class="col">
+                            {% if form.price.errors %}
+                            {{ form.price(class="form-control is-invalid", placeholder='Enter Bet Price Amount') }}
+                            <div class="invalid-feedback">
+                                {% for error in form.price.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.price(class="form-control", placeholder='Enter Your Bet Price') }}
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            {{ form.submit(class='btn btn-info') }}
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+            </p>
+            <!-- Post Bet End -->
+            <p>
+                <strong>Description: </strong>
+                <br>
+                {{ item.product_desc }}
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+    
