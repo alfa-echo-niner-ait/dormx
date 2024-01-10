@@ -46,6 +46,9 @@
     </div>
 </nav>
 <!-- Offcanvas start -->
+
+{% if current_user.is_authenticated %}
+    
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
@@ -62,7 +65,7 @@
                 <a class="nav-link" href="{{ url_for('profile') }}">Edit Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Manage Products</a>
+                <a class="nav-link" href="{{ url_for('user_items', user_id=current_user.user_id) }}">Manage Products</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-danger" href="{{ url_for('logout') }}">Logout</a>
@@ -74,29 +77,23 @@
         </form>
     </div>
 </div>
+{% endif %}
 <!-- Offcanvas end -->
 
 <!-- Notice section start -->
-<div class="container-fluid mt-2">
-    <div class="row">
-        <div class="col md-2"></div>
-        <div class="col md-8">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissible" fade show>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                {{ message }}
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-        </div>
-        <div class="col md-2"></div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="d-flex justify-content-center m-3">
+    {% for category, message in messages %}
+    <div style="width: 60%;" class="alert alert-{{ category }} alert-dismissible text-center" fade show>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        {{ message }}
     </div>
+    {% endfor %}
 </div>
+    {% endif %}
+    {% endwith %}
 <!-- Notice section end -->
-
 
 {% block content %}
 

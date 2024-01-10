@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="d-flex justify-content-between">
+        <div>
+            <h4 class="display-6">My Products({{ total }})</h4>
+        </div>
+        <div class="mt-3">
+            <a href="{{ url_for('add_item') }}"
+            class="btn btn-large btn-success ms-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-plus-fill"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m.5 4v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0" />
+            </svg>
+            Add New Products
+            </a>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<div class="container mt-3">
+    <div id="uitems">
+    {% for item in items %}
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div>
+                    <a class="btn" data-bs-toggle="collapse" href="#{{ item.product_id }}">
+                        {{ item.product_name }}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </a>
+                </div>
+                <div>
+                    {% if item.product_type == 'Buy' %}
+                    <span class="badge bg-info fs-6 me-2">{{ item.product_type }}</span>
+                    {% else %}
+                    <span class="badge bg-primary fs-6 me-2">{{ item.product_type }}</span>
+                    {% endif %}
+                
+                    {% if item.condition == 'Pending' %}
+                    <span class="badge bg-warning fs-6">
+                        <span class="spinner-border spinner-border-sm"></span>
+                        Pending
+                    </span>
+                    {% else %}
+                    <span class="badge bg-success fs-6">
+                        Completed
+                    </span>
+                    {% endif %}
+                    <div class="btn-group">
+                        <a href="{{ url_for('item_update', item_id=item.product_id) }}" class="btn btn btn-info">Edit</a>
+                        <a href="{{ url_for('item_delete', item_id=item.product_id) }}" class="btn btn btn-danger"
+                            onclick="return confirm('Are You Sure To Delete?')">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div id="{{ item.product_id }}" class="collapse" data-bs-parent="#uitems">
+                <div class="card-body">
+                    <div class="d-flex flex-sm-row">
+                        <div class="flex-fill">
+                            <img src="{{url_for('static', filename='item_pics/' ~ item.product_pic) }}"
+                            alt="{{ item.product_name }}"
+                            style="max-width: 180px; max-height: 180px;"
+                            class="img-fluid img-thumbnail mx-auto d-block">
+                        </div>
+                        <div class="flex-fill">
+                            <p class="text-secondary">Added On: {{ item.entry_date }} at {{ item.entry_time }}</p>
+                            <p class="text-secondary">Last Update: {{ item.last_update_date }} at {{ item.last_update_time }}</p>
+                            <p><strong>Price Range:</strong> {{ item.price_range }}</p>
+                            <p><a href="{{ url_for('item', item_id=item.product_id) }}"
+                                class="btn btn btn-secondary">View Product</a></p>
+                            <p>
+                                <strong>Description:</strong>
+                                <br>
+                                {%for line in item.product_desc%}{%if line=='\n'%}
+                                <br>
+                                {% else %}{{line}}{%endif%}{%endfor%}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+<!-- Pagination -->
+<div class="container">
+    <div class="row mx-auto mt-3 mb-3">
+        <div class="col md-12 text-center p-1 border rounded">
+            {% for page_num in items.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+            {% if items.page == page_num %}
+            <a class="btn btn-info m-2" href="{{ url_for('user_items', user_id=current_user.user_id, page=page_num) }}">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a class="btn btn-outline-info m-2" href="{{ url_for('user_items', user_id=current_user.user_id, page=page_num) }}">
+                {{ page_num }}
+            </a>
+            {% endif %}
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

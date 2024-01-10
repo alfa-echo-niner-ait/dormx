@@ -1,9 +1,141 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="container mt-3">
-    <div class="display-6">
-        {{ product.product_name }}
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <!-- Start of left column -->
+        <div class="col md-9 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Update Product</h4>
+                </div>
+                <!-- Form start -->
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="d-lg-flex flex-sm-row mb-3 rounded">
+                                <div class="flex-fill border p-3">
+                                    <img src="{{url_for('static', filename='item_pics/' ~ item.product_pic) }}" alt="{{ item.product_name }}"
+                                        class="img-fluid mx-auto d-block">
+                                </div>
+                                <div class="flex-fill border p-3">
+                                    <h5 class="me-auto">{{ item.product_name }}</h4>
+                                    <p class="text-secondary">Last Update: {{ item_st.last_update_date }} at {{ item_st.last_update_time }}</p>
+                                    <p class="card-text">
+                                        {% if item_st.condition == 'Pending' %}
+                                        <span class="badge bg-warning fs-6">
+                                            <span class="spinner-border spinner-border-sm"></span>
+                                            Pending
+                                        </span>
+                                        <br>
+                                        <div class="mb-3 form-check fw-bold">
+                                            {{ form.complete.label(class='form-check-label') }}
+                                            {{ form.complete(class='form-check-input', type='checkbox') }}
+                                        </div>
+                                        {% else %}
+                                        <span class="badge bg-success fs-6">
+                                            Completed
+                                        </span>
+                                        {% endif %}
+                                    </p>
+                                    <br>
+                                    <!-- Profile Picture -->
+                                    <h6>{{ form.product_pic.label() }} (jpg, jpeg, png only)</h6>
+                                    {{ form.product_pic(class='form-control') }}
+                                    {% if form.product_pic.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.product_pic.errors %}
+                                        {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    <p class="pt-3 pb-2">
+                                        <a href="{{ url_for('item_delete', item_id=item.product_id) }}"
+                                        class="btn btn-danger"
+                                        onclick="return confirm('Are You Sure To Delete?')">Delete This Product</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Product Name -->
+                            <div class="mb-3">
+                                {{ form.name.label(class='form-label') }}
+                                {{ form.name(class='form-control', placeholder='Enter Product Name') }}
+                                {% if form.name.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.name.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Product Type -->
+                            <div class="mb-3">
+                                {{ form.type.label(class='form-label') }}
+                                {{ form.type(class='form-select') }}
+                                {% if form.type.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.type.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="mb-3">
+                                {{ form.price_range.label(class='form-label') }}
+                                {{ form.price_range(class='form-control', placeholder='Enter Price Range(Eg,. 50-70 RMB)') }}
+                                {% if form.price_range.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.price_range.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Description -->
+                            <div class="mb-3">
+                                {{ form.description.label(class='form-label') }}
+                                {{ form.description(class='form-control', style="height: 90px;", placeholder='Enter Description for Your Product') }}
+                            </div>
+
+                            <div class="d-grid mb-3">
+                                {{ form.submit(class='btn btn-info fs-5 btn-block') }}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- Form end -->
+            </div>
+        </div>
+
+        <!-- Start of right column -->
+        <div class="col-md-3 mb-3">
+            <div class="border rounded">
+                <div class="bg-light p-3 fw-bold">Tools</div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="{{ url_for('index') }}" class="text-decoration-none">Home</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('user_items', user_id=current_user.user_id) }}"
+                        class="text-decoration-none">Manage My Products</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('add_item') }}" class="text-decoration-none">Add New Product</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('logout') }}" class="text-decoration-none">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}

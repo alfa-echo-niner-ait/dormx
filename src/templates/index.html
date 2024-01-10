@@ -2,9 +2,9 @@
 
 {% block content %}
 <div class="container mt-3">
-    <div class="row">
-        {% for item in products %}
-        <div class="col md-3 mb-2">
+    <div class="row mx-auto">
+        {% for item in products.items %}
+        <div class="col-md-3 mt-3">
             <div class="card rounded" style="width: 250px;">
                 <img src="{{url_for('static', filename='item_pics/' ~ item.product_pic) }}"
                 alt="Product" class="card-img-top p-1" style="max-height: 160px;">
@@ -17,9 +17,17 @@
                         {% if item.product_type == 'Buy' %}
                         <span class="badge bg-info">{{ item.product_type }}</span>
                         {% else %}
-                        <span class="badge bg-warning">{{ item.product_type }}</span>
+                        <span class="badge bg-primary">{{ item.product_type }}</span>
                         {% endif %}
-                            
+                        {% if item.condition == 'Pending' %}
+                        <span class="badge bg-warning">
+                            Pending
+                        </span>
+                        {% else %}
+                        <span class="badge bg-success">
+                            Completed
+                        </span>
+                        {% endif %}
                         <br>
                         {{ item.price_range }}
                     </p>
@@ -27,7 +35,28 @@
             </div>
         </div>
         {% endfor %}
-    </div> 
+    </div>
+
+    <!-- Pagination -->
+    <div class="row mx-auto mt-3 mb-3">
+        <div class="col md-12 text-center p-1 border rounded">
+        {% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if products.page == page_num %}
+                    <a class="btn btn-info m-2" href="{{ url_for('index', page=page_num) }}">
+                        {{ page_num }}
+                    </a>
+                    {% else %}        
+                    <a class="btn btn-outline-info m-2" href="{{ url_for('index', page=page_num) }}">
+                        {{ page_num }}
+                    </a>
+                {% endif %}
+            {% else %}
+            ...
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
 </div>
 {% endblock content %}
     

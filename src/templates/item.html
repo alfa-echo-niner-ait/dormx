@@ -3,13 +3,14 @@
 {% block content %}
 
 <div class="container mt-3">
-    <div class="row border rounded">
-        <div class="col md-6 border">
+    <div class="d-lg-flex flex-sm-row mb-3 rounded">
+        <div class="flex-fill border p-3">
             <img src="{{url_for('static', filename='item_pics/' ~ item.product_pic) }}"
-            alt="{{ item.product_name }}" class="img-fluid mx-auto d-block"
-            style="max-height: 500px; max-width: 500px;">
+            alt="{{ item.product_name }}"
+            style="max-width: 500px; max-height: 500px;"
+            class="img-fluid mx-auto d-block">
         </div>
-        <div class="col md-6">
+        <div class="flex-fill border p-3">
             <h4 class="display-6">
                 {{ item.product_name }}
             </h4>
@@ -17,11 +18,11 @@
                 {% if item.product_type == 'Buy' %}
                 <span class="badge bg-info fs-6 me-2">{{ item.product_type }}</span>
                 {% else %}
-                <span class="badge bg-warning fs-6 me-2">{{ item.product_type }}</span>
+                <span class="badge bg-primary fs-6 me-2">{{ item.product_type }}</span>
                 {% endif %}
 
                 {% if item_st.condition == 'Pending' %}
-                <span class="badge bg-danger fs-6">
+                <span class="badge bg-warning fs-6">
                     <span class="spinner-border spinner-border-sm"></span>
                     Pending
                 </span>
@@ -45,8 +46,9 @@
                 {% if current_user.user_id == item.product_user_id %}
                 <a href="{{ url_for('item_update', item_id=item.product_id) }}" class="btn btn-info">Update This Product</a>
                 {% elif current_user.is_authenticated %}
-                <form method="POST" action="">
+                <form method="POST" action="{{ url_for('bet', item_id=item.product_id) }}" method="POST">
                     {{ form.hidden_tag() }}
+                    <!-- <input type="hidden" name="user_id" value="{{ current_user.user_id }}"> -->
                     <div class="row">
                         <div class="col">
                             {% if form.price.errors %}
@@ -71,11 +73,86 @@
             <p>
                 <strong>Description: </strong>
                 <br>
-                {{ item.product_desc }}
+                {%for line in item.product_desc%}{%if line=='\n'%}
+                <br>
+                {% else %}{{line}}{%endif%}{%endfor%}
             </p>
         </div>
     </div>
 </div>
 
+<!-- Bet listing Section -->
+<div class="container mt-3">
+    <div class="row">
+        <!-- Start of left column -->
+        <div class="col md-8 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Product Bets</h4>
+                </div>
+                <div class="card-body">  
+                {% if current_user.is_authenticated %}
+                {% for bet in bets %}
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{url_for('static', filename='profile_pics/' ~ bet.profile_pic) }}" alt="{{ bet.fullname }}"
+                            style="width: 60px; max-height: 60px;" class="rounded-pill pe-1" />
+                        <br>
+                        <a href="{{ url_for('user', user_id=bet.user_id) }}"
+                        class="text-decoration-none">{{ bet.fullname }}</a>
+                    </div>
+                    <div class="col-md-10">
+                        <p>
+                            <a onclick="$('#bet{{bet.bet_id}}').toggle();"
+                            class="text-primary text-decoration-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill"
+                                    viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                </svg>
+                                Show Contact
+                            </a>
+                            <div style="display:none;" id="bet{{bet.bet_id}}">{{ bet.phone }}</div>
+                        </p>
+                        <p>
+                            <strong>Betted: {{ bet.bet_amount }}</strong>
+                        </p>
+                        <p class="text-secondary">{{ bet.bet_date }} {{ bet.bet_time }}</p>
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
+                {% else %}
+                <p class="text-danger">Please login to see bets!</p>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Start of right column -->
+        <div class="col-md-4 mb-3">
+            {% if current_user.is_authenticated %}
+            <div class="border rounded">
+                <div class="bg-light p-3 fw-bold">Tools</div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="{{ url_for('index') }}" class="text-decoration-none">Home</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('profile') }}" class="text-decoration-none">Edit Profile</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('user_items', user_id=current_user.user_id) }}"
+                        class="text-decoration-none">Manage Products</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('logout') }}" class="text-decoration-none">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock content %}
     

@@ -56,7 +56,7 @@
                             <div class="mb-3">
                                 {{ form.product_pic.label(class='form-label') }}
                                 <br>
-                                {{ form.product_pic(class='form-control-file') }}
+                                {{ form.product_pic(class='form-control') }}
                                 {% if form.product_pic.errors %}
                                 <div class="invalid-feedback">
                                     {% for error in form.product_pic.errors %}
@@ -93,7 +93,8 @@
                         <a href="{{ url_for('profile') }}" class="text-decoration-none">Edit Profile</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="" class="text-decoration-none">My Products</a>
+                        <a href="{{ url_for('user_items', user_id=current_user.user_id) }}"
+                        class="text-decoration-none">Manage My Products</a>
                     </li>
                     <li class="list-group-item">
                         <a href="{{ url_for('logout') }}" class="text-decoration-none">Logout</a>

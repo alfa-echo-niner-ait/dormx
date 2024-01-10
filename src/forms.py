@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SelectField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, SelectField, BooleanField, SubmitField, TextAreaField, DecimalField
 from wtforms.validators import DataRequired, Length, ValidationError
 from src.models import User_Cred
 
@@ -42,7 +42,7 @@ class UpdateProfileForm(FlaskForm):
     phone = StringField('Phone', validators=[DataRequired()])
     address = StringField('Address')
     profile_pic = FileField('Update Picture', validators=[
-                        FileAllowed(['jpg', 'jpeg', 'png'])])
+                        FileAllowed(['jpg', 'jpeg', 'png'], "Picture format error!")])
 
     submit = SubmitField('Update')
 
@@ -55,14 +55,29 @@ class AddProductForm(FlaskForm):
     description = TextAreaField('Product Description')
     price_range = StringField('Price Range', validators=[DataRequired(), Length(min=1, max=255)])
     product_pic = FileField('Product Picture', validators=[
-                        FileAllowed(['jpg', 'jpeg', 'png'])])
+        FileAllowed(['jpg', 'jpeg', 'png'], "Picture format error!")])
 
     submit = SubmitField('Add Product')
     
 
+class UpdateProductForm(FlaskForm):
+    name = StringField('Product Name',
+                       validators=[DataRequired(), Length(min=2, max=255)])
+    type = SelectField('Product Type',
+                       validators=[DataRequired()], choices=[('Buy', 'I want to buy this product'), ('Sell', 'I want to sell this product')])
+    description = TextAreaField('Product Description')
+    price_range = StringField('Price Range', validators=[
+                              DataRequired(), Length(min=1, max=255)])
+    product_pic = FileField('Change Product Picture', validators=[
+        FileAllowed(['jpg', 'jpeg', 'png'], "Picture format error!")])
+    complete = BooleanField('Mark Deal As Completed')
+
+    submit = SubmitField('Update Product')
+    
+
 class BetForm(FlaskForm):
-    price = StringField('Bet Price',
-                       validators=[DataRequired(), Length(min=1, max=255)])
+    price = DecimalField('Bet Price',
+                       validators=[DataRequired()])
     submit = SubmitField('Bet')
     
     

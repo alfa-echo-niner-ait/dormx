@@ -4,7 +4,7 @@
 <div class="container mt-3 mb-3">
     <div class="row">
         <!-- Start of left column -->
-        <div class="col md-8">
+        <div class="col md-8 mb-3">
             <div class="card">
                 <div class="card-header"><h4 class="card-title">Update Profile</h4></div>
                 <!-- Form start -->
@@ -17,31 +17,23 @@
                                 <img src="{{ profile_img }}" alt="{{ current_user.username }}"
                                     class="img-thumbnail" style="max-width: 200px;">
                             </div>
-                            <div class="col md-3">
+                            <div class="col md-9">
                                     <h4 class="me-auto">{{ current_user.username }}</h4>
-                                    <p class="card-text">Joined on {{ user.reg_date }} at {{ user.reg_time}}</p>
+                                    <p class="text-secondary">Joined on {{ log.reg_date }} at {{ log.reg_time}}</p>
                                     <!-- Profile Picture -->
-                                    <div class="row">
-                                        <div class="col md-6">
-                                            <h6>{{ form.profile_pic.label() }} (jpg, jpeg, png only)</h6>
-                                        </div>
-                                        <div class="col md-6">
-                                            {{ form.profile_pic(class='form-control-file') }}
-                                            {% if form.profile_pic.errors %}
-                                            <div class="invalid-feedback">
-                                                {% for error in form.profile_pic.errors %}
-                                                {{ error }}
-                                                {% endfor %}
-                                            </div>
-                                            {% endif %}
-                                        </div>
+                                    <h6>{{ form.profile_pic.label() }} (jpg, jpeg, png only)</h6>
+                                    {{ form.profile_pic(class='form-control') }}
+                                    {% if form.profile_pic.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.profile_pic.errors %}
+                                        {{ error }}
+                                        {% endfor %}
                                     </div>
+                                    {% endif %}
                             </div>
-                            <div class="col md-6"></div>
                         </div>
                     </div>
                     <div class="card-body">
-                        
                             <!-- Fullname -->
                             <div class="mb-3">
                                 {{ form.fullname.label(class='form-label') }}
@@ -131,7 +123,8 @@
                         <a href="{{ url_for('index') }}" class="text-decoration-none">Home</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="" class="text-decoration-none">My Products</a>
+                        <a href="{{ url_for('user_items', user_id=current_user.user_id) }}"
+                        class="text-decoration-none">Manage My Products</a>
                     </li>
                     <li class="list-group-item">
                         <a href="{{ url_for('add_item') }}" class="text-decoration-none">Add New Product</a>
