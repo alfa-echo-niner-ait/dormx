@@ -14,8 +14,7 @@ def index():
         Product.product_name, Product.product_id, Product.product_type, Product.price_range,
         Product.product_pic, Product_Status.condition
     ).paginate(page=page_num, per_page=8)
-    products = Product.query.order_by(
-        Product.product_id.desc()).paginate(page=page_num, per_page=8)
+    
     return render_template('index.html', title='Home', products=items)
 
 
