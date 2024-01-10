@@ -303,3 +303,8 @@ def remove_bet(item_id, bet_id):
     flash("Bet has been removed!", category="warning")
     
     return redirect(url_for('item', item_id=item_id))
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html', title="About")

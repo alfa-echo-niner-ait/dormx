@@ -11,8 +11,9 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
     <link rel="shortcut icon" href="{{url_for('static', filename='files/fav.ico')}}" type="image/x-icon">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <!-- Navbar start -->
+<header>
 <nav class="navbar bg-info">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -80,6 +81,9 @@
 </div>
 {% endif %}
 <!-- Offcanvas end -->
+</header>
+
+<content>
 
 <!-- Notice section start -->
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -99,6 +103,14 @@
 {% block content %}
 
 {% endblock content %}
+
+</content>
+
+<footer class="mt-auto pt-2" style="background-color: #e3f2fd;">
+    <p class="text-center text-muted">
+        © DormX 2024, <a class="text-primary text-decoration-none" href="{{ url_for('about') }}">About This Project</a>
+    </p>
+</footer>
 
 <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
 <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
