@@ -71,8 +71,9 @@
                 <a class="nav-link text-danger" href="{{ url_for('logout') }}">Logout</a>
             </li>
         </ul>
-        <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form action="{{ url_for('search') }}"
+        class="d-flex mt-3" role="search">
+            <input class="form-control me-2" name="key" type="text" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-info" type="submit">Search</button>
         </form>
     </div>
@@ -85,7 +86,7 @@
 {% if messages %}
 <div class="d-flex justify-content-center m-3">
     {% for category, message in messages %}
-    <div style="width: 60%;" class="alert alert-{{ category }} alert-dismissible text-center" fade show>
+    <div style="width: 60%;" class="alert alert-{{ category }} alert-dismissible text-center mb-2" fade show>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         {{ message }}
     </div>

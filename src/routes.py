@@ -18,6 +18,18 @@ def index():
     return render_template('index.html', title='Home', products=items)
 
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    title = "Search"
+    items = None
+    key = request.args.get('key')
+    if key:
+        title = key
+        items = Product.query.filter(Product.product_name.like(
+            '%' + key + '%')).order_by(Product.product_id.desc()).all()
+    return render_template('search.html', title=title, products=items)
+
+
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -122,7 +134,7 @@ def register():
 
         regged_user = User_Cred.query.filter_by(username=username).first()
         new_user = User(regged_user.user_id, fullname, gender,
-                        phone, address, reg_date, reg_time, profile_pic)
+                        phone, address, profile_pic)
         new_user_log = User_Logs(regged_user.user_id, reg_date, reg_time)
 
         db.session.add(new_user)
@@ -177,8 +189,8 @@ def item(item_id):
     bets = Bets.query.filter_by(bet_product_id=item_id
                                 ).join(User, Bets.bet_user_id == User.user_id
                                        ).add_columns(Bets.bet_id,
-                                                     Bets.bet_amount, Bets.bet_date, Bets.bet_time, User.user_id,
-                                                     User.fullname, User.phone, User.profile_pic)
+                                                     Bets.bet_product_id, Bets.bet_amount, Bets.bet_date, Bets.bet_time,
+                                                     User.user_id, User.fullname, User.phone, User.address, User.profile_pic)
 
     poster = User_Cred.query.filter_by(user_id=product.product_user_id).first()
     poster_id = poster.user_id
@@ -186,7 +198,7 @@ def item(item_id):
     product_st = Product_Status.query.filter_by(product_id=item_id).first()
     
     return render_template('item.html', title=product.product_name,
-                           ps_id=poster_id, ps_uname=poster_name,
+                           ps_uid=poster_id, ps_uname=poster_name,
                            form=form, item=product, item_st=product_st, bets=bets)
 
 
@@ -278,4 +290,16 @@ def bet(item_id):
         db.session.commit()
         flash(f'Your bet of {price} has been placed!', category='warning')
 
+    return redirect(url_for('item', item_id=item_id))
+
+
+# Bet placing handler
+@app.route('/remove_bet/<int:item_id>/<int:bet_id>', methods=['GET', 'POST'])
+@login_required
+def remove_bet(item_id, bet_id):
+    bet = Bets.query.filter_by(bet_id=bet_id).first_or_404()
+    db.session.delete(bet)
+    db.session.commit()
+    flash("Bet has been removed!", category="warning")
+    
     return redirect(url_for('item', item_id=item_id))

@@ -19,6 +19,7 @@ class User_Cred(db.Model, UserMixin):
         super().__init__()
         self.username = username
         self.password = password
+        self.role = 'user'
         
     def get_id(self):
         return self.user_id

@@ -33,8 +33,7 @@
                 {% endif %}
             </p>
             <p>
-                <strong>Posted By: </strong> <a href="{{ url_for('user', user_id=ps_id) }}"
-                class="text-decoration-none">{{ ps_uname }}</a>
+                <strong>Posted By: </strong> {{ ps_uname }}
                 <br>
                 <strong>Last Update: </strong> {{ item_st.last_update_date }} at {{ item_st.last_update_time }}
                 <br>
@@ -42,13 +41,11 @@
             </p>
             <!-- Post Bet -->
             <p>
-                
                 {% if current_user.user_id == item.product_user_id %}
                 <a href="{{ url_for('item_update', item_id=item.product_id) }}" class="btn btn-info">Update This Product</a>
                 {% elif current_user.is_authenticated %}
                 <form method="POST" action="{{ url_for('bet', item_id=item.product_id) }}" method="POST">
                     {{ form.hidden_tag() }}
-                    <!-- <input type="hidden" name="user_id" value="{{ current_user.user_id }}"> -->
                     <div class="row">
                         <div class="col">
                             {% if form.price.errors %}
@@ -98,10 +95,15 @@
                         <img src="{{url_for('static', filename='profile_pics/' ~ bet.profile_pic) }}" alt="{{ bet.fullname }}"
                             style="width: 60px; max-height: 60px;" class="rounded-pill pe-1" />
                         <br>
-                        <a href="{{ url_for('user', user_id=bet.user_id) }}"
-                        class="text-decoration-none">{{ bet.fullname }}</a>
+                        <h5 class="h5">{{ bet.fullname }}</h5>
                     </div>
                     <div class="col-md-10">
+                        {% if current_user.user_id == bet.user_id %}
+                        <a href="{{ url_for('remove_bet', item_id=bet.bet_product_id, bet_id=bet.bet_id) }}"
+                        class="btn btn-danger btn-sm">Remove Bet</a>
+                        {% endif %}
+
+                        {% if current_user.user_id == ps_uid %}
                         <p>
                             <a onclick="$('#bet{{bet.bet_id}}').toggle();"
                             class="text-primary text-decoration-none">
@@ -110,10 +112,15 @@
                                     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                                     <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                 </svg>
-                                Show Contact
+                                Show Contacts
                             </a>
-                            <div style="display:none;" id="bet{{bet.bet_id}}">{{ bet.phone }}</div>
+                            <div style="display:none;" id="bet{{bet.bet_id}}">
+                                <mark>{{ bet.phone }}</mark>
+                                <p>{{ bet.address }}</p>
+                            </div>
                         </p>
+                        {% endif %}
+                            
                         <p>
                             <strong>Betted: {{ bet.bet_amount }}</strong>
                         </p>
