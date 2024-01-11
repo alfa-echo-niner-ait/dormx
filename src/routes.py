@@ -48,6 +48,9 @@ def profile():
             picture_file = helper.save_profile_picture(form.profile_pic.data)
             user.profile_pic = picture_file
         user.fullname = form.fullname.data
+        user.gender = form.gender.data
+        user.phone = form.phone.data
+        user.address = form.address.data
         user_log.last_profile_update_date = date_now
         user_log.last_profile_update_time = time_now
 
@@ -64,12 +67,6 @@ def profile():
     return render_template('profile.html', title='Profile',
                            form=form, user=user, log=user_log, profile_img=profile_img)
 
-
-@app.route('/user/<int:user_id>', methods=['GET', 'POST'])
-@login_required
-def user(user_id):
-    user = User.query.filter_by(user_id=user_id).first()
-    return render_template('user.html', title=user.fullname, user=user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
