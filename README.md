@@ -43,28 +43,41 @@ __`Shandong Univerity of Science and Technology`__
 
 ### Screenshots
 1. Homepage
+
 ![Homepage](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/7c01c81f-f7c7-464c-9dc6-d3cfd6dfa7e6)
 
 2. Login
+
 ![Login](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/6674ef7b-0421-4575-9326-4a22febcbf9a)
 
 4. Registration
+
 ![Registration](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/b826107f-13a9-484e-9cbd-84ea7b71b355)
 
 5. Add Product
+
 ![Add Product](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/96af05e9-bf4e-429f-a087-8eced8840954)
 
 7. My Products
-![My Products](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/edf22975-2614-46f9-b4c4-0fa811b6280f)
+
+![My Product](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/c1378017-617d-4c66-ac0d-c560e3fd7666)
 
 8. Update Product
-![Update Product](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/c1378017-617d-4c66-ac0d-c560e3fd7666)
+
+![Update Products](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/edf22975-2614-46f9-b4c4-0fa811b6280f)
 
 9. Update Profile
+
 ![Update Profile](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/9d632afc-b00d-4c5a-b282-48e41438c074)
 
 10. Product Page
+
 ![Product View](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/0f874075-c953-4147-acc4-2b44c2f1626b)
 
-11. Search
+11. Product Page (Product Owner View)
+
+![Product owner view](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/8ce131a8-8c5e-4fef-8baa-69ff70c98b83)
+
+12. Search
+
 ![Search](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/60b4c2d5-2f13-456f-ab1a-bc31f003bdcf)
