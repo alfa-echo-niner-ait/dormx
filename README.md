@@ -11,7 +11,7 @@ _DormX_ is a simple web application for buying and selling, specifically designe
 `Students of Software Engineering 2020(International Students)`
 
 
-### Project Assigned by
+### Project Reviewed by
 
 - __Dr. QianQian Li__, Email: sdnuliqian@163.com, Computer Science and Information Department
 
