@@ -1,6 +1,6 @@
 # DormX
 
-_DormX_ is a simple web application for buying and selling, specifically designed for students residing in the university dormitory area. The platform enables students to easily exchange their used or unnecessary items, as well as inquire about products within a specified price range. In both buying and selling scenarios, users can submit competitive bids. Subsequently, the product owner can access the bidder's contact information to facilitate the completion of the transaction. Our primary focus is on efficiently and effectively implementing the use of a _Relational Database Management System (RDBMS)_ in a real-life scenario. We have established relationships between entities and normalized our database to cater to the requirements, ensuring its seamless functionality in various _CRUD (Create, Read, Update, Delete)_ operations.
+_DormX_ is a simple web application for buying and selling, specifically designed for students residing in the university dormitory area. The platform enables students to easily exchange their used or unnecessary items and inquire about products within a specified price range. In both buying and selling scenarios, users can submit competitive bids. Subsequently, the product owner can access the bidder's contact information to facilitate the completion of the transaction. Our primary focus is on efficiently and effectively implementing a _Relational Database Management System (RDBMS)_ in a real-life scenario. We have established relationships between entities and normalized our database to cater to the requirements, ensuring its seamless functionality in various _CRUD (Create, Read, Update, Delete)_ operations.
 
 
 ### A Group Project by
@@ -39,20 +39,20 @@ __`Shandong Univerity of Science and Technology`__
    <img src="https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/d3c47119-020c-4bf5-9a0f-3ba5bdf811e3" alt="DormX Database" />
 
 3. Modify your database information in `src/__init__.py` file. Change __SECRET_KEY__, __DB_NAME__, __DB_USERNAME__, __DB_PASSWORD__
-4. Then you can run the `run.py` file to start the server. Debug mode is set to true, set false if you don't need.
+4. Then you can run the `run.py` file to start the server. Debug mode is set to true, set to false if you don't need it.
 
 ### Screenshots
 1. Homepage
 
-![Homepage](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/7c01c81f-f7c7-464c-9dc6-d3cfd6dfa7e6)
+![Homepage](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/12e08519-b478-4e66-9359-d543537612bf)
 
 2. Login
 
-![Login](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/6674ef7b-0421-4575-9326-4a22febcbf9a)
+![Login](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/6f4846d8-3326-49a2-bc96-52440df372c1)
 
 4. Registration
 
-![Registration](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/b826107f-13a9-484e-9cbd-84ea7b71b355)
+![Registration](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/12823d6f-a5ee-47eb-8cad-a4229eeef825)
 
 5. Add Product
 
@@ -60,7 +60,7 @@ __`Shandong Univerity of Science and Technology`__
 
 7. My Products
 
-![My Product](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/c1378017-617d-4c66-ac0d-c560e3fd7666)
+![My Products](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/8c7547cf-57c0-48eb-836c-394d5f6122cc)
 
 8. Update Product
 
