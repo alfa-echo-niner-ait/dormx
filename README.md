@@ -1,6 +1,6 @@
 # DormX
 
-_DormX_ is a simple web application for buying and selling, specifically designed for students residing in the university dormitory area. The platform enables students to easily exchange their used or unnecessary items, as well as inquire about products within a specified price range. In both buying and selling scenarios, users can submit competitive bids. Subsequently, the product owner can access the bidder's contact information to facilitate the completion of the transaction. Our primary focus is on efficiently and effectively implementing the use of a _Relational Database Management System (RDBMS)_ in a real-life scenario. We have established relationships between entities and normalized our database to cater to the requirements, ensuring its seamless functionality in various _CRUD (Create, Read, Update, Delete)_ operations.
+_DormX_ is a simple web application for buying and selling, specifically designed for students residing in the university dormitory area. The platform enables students to easily exchange their used or unnecessary items and inquire about products within a specified price range. In both buying and selling scenarios, users can submit competitive bids. Subsequently, the product owner can access the bidder's contact information to facilitate the completion of the transaction. Our primary focus is on efficiently and effectively implementing a _Relational Database Management System (RDBMS)_ in a real-life scenario. We have established relationships between entities and normalized our database to cater to the requirements, ensuring its seamless functionality in various _CRUD (Create, Read, Update, Delete)_ operations.
 
 
 ### A Group Project by
@@ -60,7 +60,7 @@ __`Shandong Univerity of Science and Technology`__
 
 7. My Products
 
-![My Product](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/c1378017-617d-4c66-ac0d-c560e3fd7666)
+![My Products](https://github.com/alfa-echo-niner-ait/dormx/assets/78315132/8c7547cf-57c0-48eb-836c-394d5f6122cc)
 
 8. Update Product
 
