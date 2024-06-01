@@ -4,9 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.secret_key = 'SECRET_KEY'
+app.secret_key = 'ajfa8afhafxjfaa9ja28ajfaofmalal13mad'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://DB_USERNAME:DB_PASSWORD@localhost:3306/DB_NAME'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/dormx'
 app.config['SQLALCHEMY_CHARSET'] = 'utf8mb4'
 app.config['SQLALCHEMY_COLLATION'] = 'utf8mb4_0900_ai_ci'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

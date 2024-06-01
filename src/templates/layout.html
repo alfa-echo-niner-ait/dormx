@@ -9,6 +9,8 @@
         <title>DormX</title>
     {% endif %}
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-icons.min.css')}}">
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
     <link rel="shortcut icon" href="{{url_for('static', filename='files/fav.ico')}}" type="image/x-icon">
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -112,7 +114,6 @@
     </p>
 </footer>
 
-<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
-<script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
 </body>
 </html>
