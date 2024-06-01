@@ -1,43 +1,45 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="container mt-3">
-    <div class="row">
+<div class="container mt-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
         {% for item in products.items %}
-        <div class="col-md-4 col-lg-3 mt-3">
-            <div class="card rounded h-100">
-                <div class="card-img-top text-center">
+        <div class="col mb-3">
+            <div class="card rounded-3 h-100">
+                <div class="card-img-top text-center bg-secondary-subtle">
                     <img src="{{url_for('static', filename='item_pics/' ~ item.product_pic) }}"
-                    alt="{{ item.product_name }}" class="card-img-top" style="height: 220px;">
-                </div>
-                <div class="card-body">
-                    <a href="{{ url_for('item', item_id=item.product_id) }}"
-                    class="card-title fs-5 fw-semibold text-decoration-none text-info-emphasis">
-                        {{ item.product_name[:30] }}
-                    </a>
-                    <p class="card-text">
+                        alt="{{ item.product_name }}" class="card-img-top" style="height: 220px;">
+                    <div class="card-img-overlay text-end">
                         {% if item.product_type == 'Buy' %}
-                        <span class="badge bg-info-subtle text-info-emphasis rounded-pill">
+                        <span class="badge bg-info-subtle text-info-emphasis rounded p-2">
                             {{ item.product_type }}
                         </span>
                         {% else %}
-                        <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">
+                        <span class="badge bg-danger-subtle text-danger-emphasis rounded p-2">
                             {{ item.product_type }}
                         </span>
                         {% endif %}
-
                         {% if item.condition == 'Pending' %}
-                        <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">
+                        <span class="badge bg-warning-subtle text-warning-emphasis rounded p-2">
                             Pending
                         </span>
                         {% else %}
-                        <span class="badge bg-success-subtle text-success-emphasis rounded-pill">
+                        <span class="badge bg-success-subtle text-success-emphasis rounded p-2">
                             Completed
                         </span>
                         {% endif %}
-                        <br>
-                        <b>Est. Price </b>{{ item.price_range }}
-                    </p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <span class="fs-6 text-secondary">
+                        <b>Price: </b>{{ item.price_range }}
+                    </span>
+                    <br>
+                    <a href="{{ url_for('item', item_id=item.product_id) }}"
+                        class="fs-5 fw-semibold text-decoration-none text-info-emphasis"
+                        style="position: relative; z-index: 1;">
+                        {{ item.product_name[:27] }}
+                    </a>
                 </div>
             </div>
         </div>
@@ -45,25 +47,24 @@
     </div>
 
     <!-- Pagination -->
-    <div class="row mx-auto mt-3 mb-3">
-        <div class="col md-12 text-center p-1 border rounded">
-        {% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    <div class="row mx-auto mb-3">
+        <div class="col md-12 text-center p-1">
+            {% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if page_num %}
-                {% if products.page == page_num %}
-                    <a class="btn btn-info m-2" href="{{ url_for('index', page=page_num) }}">
-                        {{ page_num }}
-                    </a>
-                    {% else %}        
-                    <a class="btn btn-outline-info m-2" href="{{ url_for('index', page=page_num) }}">
-                        {{ page_num }}
-                    </a>
-                {% endif %}
+            {% if products.page == page_num %}
+            <a class="btn btn-info rounded-pill m-2" href="{{ url_for('index', page=page_num) }}">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a class="btn btn-outline-info rounded-pill m-2" href="{{ url_for('index', page=page_num) }}">
+                {{ page_num }}
+            </a>
+            {% endif %}
             {% else %}
             ...
             {% endif %}
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 </div>
 {% endblock content %}
-    

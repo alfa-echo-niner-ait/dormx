@@ -1,53 +1,55 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="container mt-3 p-3 shadow bg-light rounded" style="max-width: 480px;">
-    <div class="display-6 text-center">Login</div>
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <!-- Username -->
-        <div class="mb-3 mt-3">
-            {{ form.username.label(class='form-label') }}
-            {% if form.username.errors %}
-            {{ form.username(class="form-control is-invalid", placeholder='Enter Username') }}
-            <div class="invalid-feedback">
-                {% for error in form.username.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
+<main class="my-auto" role="main">
+    <div class="container mt-3 p-3 shadow bg-light rounded" style="max-width: 480px;">
+        <div class="display-6 text-center">Login</div>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <!-- Username -->
+            <div class="mb-3 mt-3">
+                {{ form.username.label(class='form-label') }}
+                {% if form.username.errors %}
+                {{ form.username(class="form-control is-invalid", placeholder='Enter Username') }}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.username(class="form-control", placeholder='Enter Username') }}
+                {% endif %}
             </div>
-            {% else %}
-            {{ form.username(class="form-control", placeholder='Enter Username') }}
-            {% endif %}
-        </div>
-
-        <!-- Password -->
-        <div class="mb-3 mt-3">
-            {{ form.password.label(class='form-label') }}
-            {% if form.password.errors %}
-            {{ form.password(class="form-control is-invalid", placeholder='Enter Password') }}
-            <div class="invalid-feedback">
-                {% for error in form.password.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
+    
+            <!-- Password -->
+            <div class="mb-3 mt-3">
+                {{ form.password.label(class='form-label') }}
+                {% if form.password.errors %}
+                {{ form.password(class="form-control is-invalid", placeholder='Enter Password') }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.password(class="form-control", placeholder='Enter Password') }}
+                {% endif %}
             </div>
-            {% else %}
-            {{ form.password(class="form-control", placeholder='Enter Password') }}
-            {% endif %}
+    
+            <!-- Login Checkbox -->
+            <div class="mb-3 form-check">
+                {{ form.remember.label(class='form-check-label') }}
+                {{ form.remember(class='form-check-input', type='checkbox') }}
+                
+            </div>
+            <div class="d-grid mb-3">
+                {{ form.submit(class='btn btn-info fs-5 btn-block') }}
+            </div>
+        </form>
+        <div class="mb-3">
+            <p class="fs-4">New here?</p>
+            <a href="{{ url_for('register') }}"><button class="btn btn-primary">Register</button></a>
         </div>
-
-        <!-- Login Checkbox -->
-        <div class="mb-3 form-check">
-            {{ form.remember.label(class='form-check-label') }}
-            {{ form.remember(class='form-check-input', type='checkbox') }}
-            
-        </div>
-        <div class="d-grid mb-3">
-            {{ form.submit(class='btn btn-info fs-5 btn-block') }}
-        </div>
-    </form>
-    <div class="mb-3">
-        <p class="fs-4">New here?</p>
-        <a href="{{ url_for('register') }}"><button class="btn btn-primary">Register</button></a>
     </div>
-</div>
+</main>
 {% endblock content %}
